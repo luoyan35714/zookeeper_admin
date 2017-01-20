@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="error" extends="base.definition">
+		<put-attribute name="title" value="出错了"/>
+		<put-attribute name="body" value="/WEB-INF/jsp/error/index.jsp" />
+	</definition>
+		
+</tiles-definitions> 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="auth.register" extends="base.definition">
+		<put-attribute name="title" value="请先注册!" />
+		<put-attribute name="body" value="/WEB-INF/jsp/auth/register.jsp" />
+	</definition>
+
+	<definition name="auth.login" extends="base.definition">
+		<put-attribute name="title" value="登录" />
+		<put-attribute name="body" value="/WEB-INF/jsp/auth/login.jsp" />
+	</definition>
+
+	<definition name="auth.access_denied" extends="base.definition">
+		<put-attribute name="title" value="您没有足够的权限!" />
+		<put-attribute name="body" value="/WEB-INF/jsp/auth/access_denied.jsp" />
+	</definition>
+
+</tiles-definitions> 

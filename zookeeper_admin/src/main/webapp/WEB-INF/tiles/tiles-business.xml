@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="manage.recruit.index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/manage/recruit/index.jsp" />
+	</definition>
+	
+	<definition name="manage.recruit.add" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/manage/recruit/add.jsp" />
+	</definition>
+	
+	<definition name="manage.recruit.update" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/manage/recruit/update.jsp" />
+	</definition>
+	
+	<definition name="manage.recruit.detail" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/manage/recruit/detail.jsp" />
+	</definition>
+	
+	<definition name="recruit.success" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/recruit/success.jsp" />
+	</definition>
+	
+	<definition name="message.index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/message/index.jsp" />
+	</definition>
+	
+</tiles-definitions> 

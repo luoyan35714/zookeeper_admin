@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Default Main Template -->
+	<definition name="base.definition" template="/WEB-INF/template/layout.jsp">
+		<put-attribute name="title" value="ZK-ADMIN管理系统" type="string" />
+		<put-attribute name="left_tree" value="/WEB-INF/jsp/left_tree.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+	</definition>
+
+	<definition name="index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+	</definition>
+		
+</tiles-definitions> 
