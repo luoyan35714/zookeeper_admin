@@ -1,35 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
  
         <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title">Zookeeper Admin!</a>
+            <a href="${pageContext.request.contextPath}" class="site_title">Zookeeper Admin!</a>
         </div>
- 
-        <div class="profile"><!--img_2 -->
-            <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">  
-            </div>
-            <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>Zookeeper Administrators</h2>
-            </div>
+ 			
+        <div class="profile">
+            <hr style="height: 1px;width:100%; background-color: white;"/>
         </div>
- 
-        <br>
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-desktop"></i> Zookeeper 实例 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                            <li><a href="general_elements.html">10.1.5.123/2181</a></li>
-                            <li><a href="general_elements.html">10.1.5.123/2181</a></li>
-                            <li><a href="general_elements.html">10.1.5.123/2181</a></li>
-                            <li><a href="general_elements.html">10.1.5.123/2181</a></li>
-                            <li><a href="general_elements.html">10.1.5.123/2181</a></li>
+                        	<c:forEach items="${zkInstances }" var="zkInstance">
+                            	<li><a href="javascript:void(0);" link="${zkInstance.id }">${zkInstance.name }</a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-edit"></i> 配置 <span class="fa fa-chevron-down"></span></a>
