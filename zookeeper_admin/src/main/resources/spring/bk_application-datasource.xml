@@ -27,14 +27,14 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<!-- Connection Info -->
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.url}" />
-	<property name="username" value="${jdbc.mysql.username}" />
-		<property name="password" value="${jdbc.mysql.password}" />
+		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+		<property name="url" value="jdbc:derby://localhost:1527/freud;create=true" />
+		<property name="username" value="admin" />
+		<property name="password" value="admin" />
 		
 		<!-- Connection Pooling Info -->
-		<property name="maxActive" value="${dbcp.maxActive}" />
-		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="maxActive" value="50" />
+		<property name="maxIdle" value="200" />
 		<property name="defaultAutoCommit" value="false" />
 		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
 		<property name="minEvictableIdleTimeMillis" value="3600000" />

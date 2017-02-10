@@ -16,7 +16,7 @@
 	</definition>
 
 	<definition name="index" extends="base.definition">
-		<put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/config/index.jsp" />
 	</definition>
 		
 </tiles-definitions> 

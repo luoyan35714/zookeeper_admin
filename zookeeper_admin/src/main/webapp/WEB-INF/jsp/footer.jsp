@@ -1,11 +1,13 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
 <hr>
-<div class="row">
+<div class="footer">
 	<div>
 		<div class="col-lg-12" style="color: white;">
-			Copyright &copy; 2015-2016 <a href="http://www.github.com/luoyan35714">Freud Kang</a>
+			Copyright &copy; 2016-<%=new SimpleDateFormat("yyyy").format(new Date()) %> <a href="http://www.hifreud.com/">Freud Kang</a>
 		</div>
 	</div>
 </div>

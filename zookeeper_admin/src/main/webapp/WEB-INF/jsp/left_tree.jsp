@@ -17,47 +17,32 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-desktop"></i> Zookeeper 实例 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                        	<c:forEach items="${zkInstances }" var="zkInstance">
-                            	<li><a href="javascript:void(0);" link="${zkInstance.id }">${zkInstance.name }</a></li>
-                            </c:forEach>
+                        	<c:if test="${zkinstance!=null }">
+                            	<li><a id="zk_instance_detail" href="${pageContext.request.contextPath}/zk/detail?id=${zkinstance.id }">${zkinstance.name }</a></li>
+                            </c:if>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-edit"></i> 配置 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                            <li><a href="form.html"> 配置端口 </a></li>
-                            <li><a href="form_advanced.html">Advanced Components</a></li>
-                            <li><a href="form_validation.html">Form Validation</a></li>
-                            <li><a href="form_wizards.html">Form Wizard</a></li>
-                            <li><a href="form_upload.html">Form Upload</a></li>
-                            <li><a href="form_buttons.html">Form Buttons</a></li>
+                            <li><a id="zk_config_common" href="form.html"> 配置端口 </a></li>
+                            <li><a id="zk_config_auth" href="form_advanced.html">Advanced Components</a></li>                            
                         </ul>
                     </li>
                     <li><a><i class="fa fa-bar-chart-o"></i> 统计 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                            <li><a href="chartjs.html">Chart JS</a></li>
-                            <li><a href="chartjs2.html">Chart JS2</a></li>
-                            <li><a href="morisjs.html">Moris JS</a></li>
-                            <li><a href="echarts.html">ECharts </a></li>
-                            <li><a href="other_charts.html">Other Charts </a></li>
+                            <li><a id="zk_statistics_node" href="chartjs.html">Chart JS</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
- 
-        <div class="sidebar-footer hidden-small">
-<!--             <a data-toggle="tooltip" data-placement="top" title="Settings"> -->
-<!--                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
-<!--             </a> -->
-<!--             <a data-toggle="tooltip" data-placement="top" title="FullScreen"> -->
-<!--                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
-<!--             </a> -->
-<!--             <a data-toggle="tooltip" data-placement="top" title="Lock"> -->
-<!--                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
-<!--             </a> -->
-<!--             <a data-toggle="tooltip" data-placement="top" title="Logout"> -->
-<!--                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
-<!--             </a> -->
-        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+	// check active menu
+	$(".left_col").find('a').filter(function () {
+	    return this.id == "<%= session.getAttribute("LEFT_TREE")%>";
+	}).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+	}).parent().addClass('active');
+</script>

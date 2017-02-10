@@ -1,40 +1,42 @@
 package com.freud.zkadmin.business.zk.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.zookeeper.KeeperException.NoNodeException;
 import org.springframework.stereotype.Service;
 
-import com.freud.zkadmin.business.zk.bean.ZkInstanceBean;
-import com.freud.zkadmin.business.zk.mapper.ZkInstanceBeanMapper;
+import com.freud.zkadmin.business.zk.repository.ZkRepository;
+import com.freud.zkadmin.business.zk.repository.ZkTreeNode;
 
 @Service
 public class ZkInstanceService {
 
-	@Autowired
-	private ZkInstanceBeanMapper zkInstanceBeanMapper;
-
-	public void createTables() {
-		zkInstanceBeanMapper.createTables();
+	public List<ZkTreeNode> getZkTree(int id) throws Exception {
+		List<ZkTreeNode> list = new ArrayList<ZkTreeNode>();
+		ZkTreeNode node = new ZkTreeNode();
+		node.setText("/");
+		node.setHref("#");
+		node.setNodes(this.getChildrentByPath("/"));
+		list.add(node);
+		return list;
 	}
 
-	public List<ZkInstanceBean> getAll() {
-		return zkInstanceBeanMapper.getAll();
-	}
+	public List<ZkTreeNode> getChildrentByPath(String root) throws Exception {
 
-	public ZkInstanceBean get(int id) {
-		return zkInstanceBeanMapper.get(id);
-	}
-
-	public void insert(ZkInstanceBean zkInstanceBean) {
-		zkInstanceBeanMapper.insert(zkInstanceBean);
-	}
-
-	public void update(ZkInstanceBean zkInstanceBean) {
-		zkInstanceBeanMapper.update(zkInstanceBean);
-	}
-
-	public void delete(int id) {
-		zkInstanceBeanMapper.delete(id);
+		List<ZkTreeNode> list = new ArrayList<ZkTreeNode>();
+		try {
+			List<String> paths = ZkRepository.newInstance().getCuratorFramework().getChildren().forPath(root);
+			for (String path : paths) {
+				ZkTreeNode node = new ZkTreeNode();
+				node.setHref("#" + path);
+				path = "/" + path;
+				node.setText(path);
+				node.setNodes(this.getChildrentByPath(path));
+				list.add(node);
+			}
+		} catch (NoNodeException e) {
+		}
+		return list;
 	}
 }

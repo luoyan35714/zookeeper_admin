@@ -1,4 +1,4 @@
-package com.freud.zkadmin.business.zk.mapper;
+package com.freud.zk;
 
 import java.util.List;
 

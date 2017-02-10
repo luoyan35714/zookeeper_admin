@@ -22,9 +22,12 @@
 		<!-- Theme styling -->
 		 
 		<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
+		
+		<link href="${pageContext.request.contextPath}/resources/css/tree/bootstrap-treeview.min.css" rel="stylesheet">
 		 
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-		 
+		 		<script src="${pageContext.request.contextPath}/resources/js/tree/bootstrap-treeview.min.js"></script>
+	
 		<!--[if lt IE 9]>
 		<script src="${pageContext.request.contextPath}/resources/js/ie8-responsive-file-warning.js"></script>
 		<![endif]-->
@@ -39,18 +42,18 @@
 	
 	<body class="nav-md">
 	
-	
 	    <div class="container body">
 	        <div class="main_container">
 				<tiles:insertAttribute name="left_tree" />
 				<tiles:insertAttribute name="header" />
 				<tiles:insertAttribute name="body" />
-<%-- 				<tiles:insertAttribute name="footer" /> --%>
+				<tiles:insertAttribute name="footer" />
 			</div>
 		</div>
 		
 		<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-	
+		
+
 	    <!-- chart js -->
 	    <script src="${pageContext.request.contextPath}/resources/js/chartjs/chart.min.js"></script>
 	    <!-- bootstrap progress js -->

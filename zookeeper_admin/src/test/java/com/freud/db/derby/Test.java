@@ -1,4 +1,4 @@
-package com.freud.zkadmin.business.auth.controller;
+package com.freud.db.derby;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-public class ZookeeperClient {
+public class Test {
 
 	public static void main(@RequestParam("AA") String[] args) throws Exception {
 		Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -49,5 +49,4 @@ public class ZookeeperClient {
 		conn.commit();
 		conn.close();
 	}
-
 }

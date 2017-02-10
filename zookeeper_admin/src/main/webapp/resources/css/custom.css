@@ -11,7 +11,7 @@ body.nav-sm .container.body .right_col {
     margin-left: 70px;
     z-index: 2;
 }
-.right_col{min-height: 1000px;}
+.right_col{min-height: 700px;}
 body.nav-sm .navbar.nav_title {
     width: 70px;
 }
@@ -5990,7 +5990,6 @@ header{width:100%;}
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url("../../assets/img/icons.png");
   vertical-align: middle;
 }
 
