@@ -11,8 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.freud.zkadmin.business.zk.bean.ZkInstanceBean;
 import com.freud.zkadmin.business.zk.repository.ZkRepository;
-import com.freud.zkadmin.business.zk.repository.ZkTreeNode;
 import com.freud.zkadmin.business.zk.service.ZkInstanceService;
+import com.freud.zkadmin.business.zk.vo.ZkNodeInfo;
+import com.freud.zkadmin.business.zk.vo.ZkTreeNode;
 import com.freud.zkadmin.framework.base.controller.BaseController;
 import com.freud.zkadmin.framework.util.DateUtil;
 
@@ -21,9 +22,9 @@ import com.freud.zkadmin.framework.util.DateUtil;
 public class ZkController extends BaseController {
 
 	@Autowired
-	private ZkInstanceService ZkInstanceService;
+	private ZkInstanceService zkInstanceService;
 
-	@RequestMapping({ "/add" })
+	@RequestMapping("/add")
 	public ModelAndView add(ZkInstanceBean zkInstanceBean) {
 		ModelAndView mav = new ModelAndView();
 		zkInstanceBean.setId(1124);
@@ -33,7 +34,7 @@ public class ZkController extends BaseController {
 		return mav;
 	}
 
-	@RequestMapping({ "/detail" })
+	@RequestMapping("/detail")
 	public ModelAndView detail(@RequestParam("id") int id) throws Exception {
 		setLeftTree("zk_instance_detail");
 
@@ -43,9 +44,15 @@ public class ZkController extends BaseController {
 		return mav;
 	}
 
-	@RequestMapping({ "/tree" })
+	@RequestMapping("/tree")
 	@ResponseBody
-	public List<ZkTreeNode> tree(@RequestParam("id") int id) throws Exception {
-		return ZkInstanceService.getZkTree(id);
+	public List<ZkTreeNode> tree(@RequestParam(value = "id", required = false) Integer id) throws Exception {
+		return zkInstanceService.getZkTree(id);
+	}
+
+	@RequestMapping("/node")
+	@ResponseBody
+	public ZkNodeInfo node(@RequestParam("path") String path) throws Exception {
+		return zkInstanceService.getZkNode(path);
 	}
 }

@@ -1,4 +1,4 @@
-package com.freud.zkadmin.business.zk.repository;
+package com.freud.zkadmin.business.zk.vo;
 
 import java.util.List;
 

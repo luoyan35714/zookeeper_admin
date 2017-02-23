@@ -50,18 +50,18 @@
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">auth <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">auth
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="auth" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
+									<input type="text" name="auth" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">password <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">password
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="password" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
+									<input type="text" name="password" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>
 							</div>
 							
