@@ -28,38 +28,33 @@
 						<br />
 						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
-								</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="name" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.name }">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">IP <span class="required">*</span>
-								</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">IP <span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="ip" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.ip }">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">PORT <span class="required">*</span>
-								</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">PORT <span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="port" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">auth
-								</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">auth</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="auth" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">password
-								</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">password</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="password" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>

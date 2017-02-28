@@ -10,4 +10,8 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/instance/detail.jsp" />
 	</definition>
 	
+	<definition name="config.index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/config/index.jsp" />
+	</definition>
+	
 </tiles-definitions> 

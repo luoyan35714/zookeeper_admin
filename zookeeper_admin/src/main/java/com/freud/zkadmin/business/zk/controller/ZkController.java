@@ -55,4 +55,16 @@ public class ZkController extends BaseController {
 	public ZkNodeInfo node(@RequestParam("path") String path) throws Exception {
 		return zkInstanceService.getZkNode(path);
 	}
+
+	@RequestMapping("/config")
+	public ModelAndView config() throws Exception {
+		setLeftTree("zk_config_common");
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("config.index");
+		if (ZkRepository.newInstance().getZkInstanceBean() != null) {
+			mav.addObject("zkinstance", ZkRepository.newInstance().getZkInstanceBean());
+		}
+		return mav;
+	}
 }

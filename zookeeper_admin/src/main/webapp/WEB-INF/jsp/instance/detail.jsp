@@ -59,7 +59,48 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="x_panel">
+				<div id="zk_node_add_panel" class="x_panel " >
+					<div class="x_title">
+						<h2>
+							添加或修改节点信息
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<div class="ln_solid"></div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Node Name : <span class="required">*</span></label>
+                        		<div class="col-md-6 col-sm-6 col-xs-12">
+                          			<input type="text" id="parentNodeName" name="parentNodeName" required="required" class="form-control col-md-7 col-xs-12">
+                        		</div>
+                      		</div>
+                      		<div class="form-group">
+                        		<label class="control-label col-md-3 col-sm-3 col-xs-12">Node Name : <span class="required">*</span></label>
+                        		<div class="col-md-6 col-sm-6 col-xs-12">
+                          			<input type="text" id="nodeName" name="nodeName" required="required" class="form-control col-md-7 col-xs-12">
+                        		</div>
+                      		</div>
+                      		<div class="form-group">
+                        		<label class="control-label col-md-3 col-sm-3 col-xs-12">Node Data : </label>
+                        		<div class="col-md-6 col-sm-6 col-xs-12">
+                          			<textarea rows="5" id="nodeData" name="nodeData" class="form-control col-md-7 col-xs-12"></textarea>
+                        		</div>
+                      		</div>
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+									<button type="submit" class="btn btn-success">Save</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="zk_node_detail_panel" class="x_panel">
 					<div class="x_title">
 						<h2>
 							节点详细信息
@@ -134,32 +175,35 @@
 $(function(){
 	var $zk_node_tree;
 	var selectedNodeId;
+	buildTree();
+	$("#zk_node_add_panel").hide();
 	// 构建节点树
-	$.post("${pageContext.request.contextPath}/zk/tree",{id:"${zkinstance.port }"},function(data){
-		$zk_node_tree = $('#zk_node_tree').treeview(
-			{
-				color: "#428bca",
-				data: data,
-				onNodeSelected: function(event, node){
-					selectedNodeId = node.nodeId;
-					console.log(getfullpath(node));
-					$.post("${pageContext.request.contextPath}/zk/node",{path:getfullpath(node)},function(data){
-						$("#zknode-data").text(data.text);
-						$("#zknode-czxid").text(data.cZxid);
-						$("#zknode-ctime").text(data.ctime);
-						$("#zknode-mzxid").text(data.mZxid);
-						$("#zknode-mtime").text(data.mtime);
-						$("#zknode-pzxid").text(data.pZxid);
-						$("#zknode-cversion").text(data.cVersion);
-						$("#zknode-dataversion").text(data.dataVersion);
-						$("#zknode-aclversion").text(data.aclVersion);
-						$("#zknode-ephemeralowner").text(data.ephemeralOwner);
-						$("#zknode-datalength").text(data.dataLength);
-						$("#zknode-numchildren").text(data.numChildren);
-					});
-				}
-			});
-	});
+	function buildTree(){
+		$.post("${pageContext.request.contextPath}/zk/tree",{id:"${zkinstance.port }"},function(data){
+			$zk_node_tree = $('#zk_node_tree').treeview(
+				{
+					color: "#428bca",
+					data: data,
+					onNodeSelected: function(event, node){
+						selectedNodeId = node.nodeId;
+						$.post("${pageContext.request.contextPath}/zk/node",{path:getfullpath(node)},function(data){
+							$("#zknode-data").text(data.text);
+							$("#zknode-czxid").text(data.cZxid);
+							$("#zknode-ctime").text(data.ctime);
+							$("#zknode-mzxid").text(data.mZxid);
+							$("#zknode-mtime").text(data.mtime);
+							$("#zknode-pzxid").text(data.pZxid);
+							$("#zknode-cversion").text(data.cVersion);
+							$("#zknode-dataversion").text(data.dataVersion);
+							$("#zknode-aclversion").text(data.aclVersion);
+							$("#zknode-ephemeralowner").text(data.ephemeralOwner);
+							$("#zknode-datalength").text(data.dataLength);
+							$("#zknode-numchildren").text(data.numChildren);
+						});
+					}
+				});
+		});
+	}
 	
 	function getfullpath(node){
 		if( node.parentId==null || node.parentId==undefined){
@@ -188,6 +232,25 @@ $(function(){
 	});
 	
 	$('#btn-collapse-all').on('click', function (e) {
+		$zk_node_tree.treeview('collapseAll', { silent: true });
+	});
+	
+	$('#btn-add-child').on('click', function (e) {
+		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		if(fullPath.length>1){
+			fullPath = fullPath.toString().substring(1); 
+		}
+		$("#parentNodeName").val(fullPath);
+		$("#zk_node_add_panel").show();
+	});
+	
+	$('#btn-add-subling').on('click', function (e) {
+		$zk_node_tree.treeview('collapseAll', { silent: true });
+	});
+	$('#btn-edit').on('click', function (e) {
+		$zk_node_tree.treeview('collapseAll', { silent: true });
+	});
+	$('#btn-delete').on('click', function (e) {
 		$zk_node_tree.treeview('collapseAll', { silent: true });
 	});
 	

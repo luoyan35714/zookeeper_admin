@@ -40,9 +40,7 @@
 </div>
 
 <script type="text/javascript">
-	// check active menu
-	$(".left_col").find('a').filter(function () {
+	var current = $(".left_col").find('a').filter(function () {
 	    return this.id == "<%= session.getAttribute("LEFT_TREE")%>";
-	}).parent('li').addClass('current-page').parents('ul').slideDown(function() {
-	}).parent().addClass('active');
+	}).parent('li').addClass('current-page').parents('ul').slideDown(function() {e();}).parent().addClass('active');
 </script>
