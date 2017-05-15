@@ -67,4 +67,11 @@ public class ZkController extends BaseController {
 		}
 		return mav;
 	}
+
+	@RequestMapping("/delete")
+	@ResponseBody
+	public String delete(@RequestParam("path") String path) throws Exception {
+		 zkInstanceService.deleteZkNode(path);
+		 return "success";
+	}
 }

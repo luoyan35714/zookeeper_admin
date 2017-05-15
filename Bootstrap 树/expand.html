@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>基于bootstrup的jQuery多级列表树插件|DEMO_jQuery之家-自由分享jQuery、html5、css3的插件库</title>
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<link href="http://libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<style type="text/css">
+		.htmleaf-header{margin-bottom: 15px;font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;}
+		.htmleaf-icon{color: #fff;}
+	</style>
+	<!--[if IE]>
+		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="htmleaf-container">
+		<header class="htmleaf-header bgcolor-12">
+			<h1>基于bootstrup的jQuery多级列表树插件 <span>Bootstrap Tree View</span></h1>
+			<div class="htmleaf-links">
+				<a class="htmleaf-icon icon-htmleaf-home-outline" href="http://www.htmleaf.com/" title="jQuery之家" target="_blank"><span> jQuery之家</span></a>
+				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="http://www.htmleaf.com/jQuery/Menu-Navigation/201502141379.html" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
+			</div>
+		</header>
+		<div class="container">
+    	<h1>Bootstrap Tree View</h1>
+      <br>
+     
+      <div class="row">
+        <hr>
+        <h2>Expandible Tree</h2>
+        <div class="col-sm-4">
+          <h2>Input</h2>
+          <div class="form-group">
+            <label for="input-expand-node" class="sr-only">Search Tree:</label>
+            <input type="input" class="form-control" id="input-expand-node" placeholder="Identify node..." value="Parent 1">
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="checkbox" id="chk-expand-silent" value="false">
+              Silent (No events)
+            </label>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-success expand-node" id="btn-expand-node">Expand Node</button>
+            </div>
+            <div class="col-sm-6">
+              <select class="form-control" id="select-expand-node-levels">
+                <option>1</option>
+                <option>2</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-danger expand-node" id="btn-collapse-node">Collapse Node</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary expand-node" id="btn-toggle-expanded">Toggle Node</button>
+          </div>
+          <hr>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-success" id="btn-expand-all">Expand All</button>
+            </div>
+            <div class="col-sm-6">
+              <select class="form-control" id="select-expand-all-levels">
+                <option>1</option>
+                <option>2</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="btn btn-danger" id="btn-collapse-all">Collapse All</button>
+        </div>
+        <div class="col-sm-4">
+          <h2>Tree</h2>
+          <div id="treeview-expandible" class=""></div>
+        </div>
+        <div class="col-sm-4">
+          <h2>Events</h2>
+          <div id="expandible-output"></div>
+        </div>
+      </div>
+	</div>
+	
+	<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+	<script src="js/bootstrap-treeview.js"></script>
+	<script type="text/javascript">
+
+	  		$(function() {
+
+        var defaultData = [
+          {
+            text: 'Parent 1',
+            href: '#parent1',
+            tags: ['4'],
+            nodes: [
+              {
+                text: 'Child 1',
+                href: '#child1',
+                tags: ['2'],
+                nodes: [
+                  {
+                    text: 'Grandchild 1',
+                    href: '#grandchild1',
+                    tags: ['0']
+                  },
+                  {
+                    text: 'Grandchild 2',
+                    href: '#grandchild2',
+                    tags: ['0']
+                  }
+                ]
+              },
+              {
+                text: 'Child 2',
+                href: '#child2',
+                tags: ['0']
+              }
+            ]
+          },
+          {
+            text: 'Parent 2',
+            href: '#parent2',
+            tags: ['0']
+          },
+          {
+            text: 'Parent 3',
+            href: '#parent3',
+             tags: ['0']
+          },
+          {
+            text: 'Parent 4',
+            href: '#parent4',
+            tags: ['0']
+          },
+          {
+            text: 'Parent 5',
+            href: '#parent5'  ,
+            tags: ['0']
+          }
+        ];
+
+        var $expandibleTree = $('#treeview-expandible').treeview({
+          data: defaultData,
+          onNodeCollapsed: function(event, node) {
+            $('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
+          },
+          onNodeExpanded: function (event, node) {
+            $('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
+          }
+        });
+
+        var findExpandibleNodess = function() {
+          return $expandibleTree.treeview('search', [ $('#input-expand-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var expandibleNodes = findExpandibleNodess();
+
+        // Expand/collapse/toggle nodes
+        $('#input-expand-node').on('keyup', function (e) {
+          expandibleNodes = findExpandibleNodess();
+          $('.expand-node').prop('disabled', !(expandibleNodes.length >= 1));
+        });
+
+        $('#btn-expand-node.expand-node').on('click', function (e) {
+          var levels = $('#select-expand-node-levels').val();
+          console.log(expandibleNodes);
+          $expandibleTree.treeview('expandNode', [ expandibleNodes, { levels: levels, silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        $('#btn-collapse-node.expand-node').on('click', function (e) {
+          $expandibleTree.treeview('collapseNode', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-expanded.expand-node').on('click', function (e) {
+          $expandibleTree.treeview('toggleNodeExpanded', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        // Expand/collapse all
+        $('#btn-expand-all').on('click', function (e) {
+          var levels = $('#select-expand-all-levels').val();
+          $expandibleTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+        });
+
+        $('#btn-collapse-all').on('click', function (e) {
+          $expandibleTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+        });
+  		});
+	  	</script>
+</body>
+</html>

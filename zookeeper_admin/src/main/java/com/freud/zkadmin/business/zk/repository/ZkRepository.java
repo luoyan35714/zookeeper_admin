@@ -13,7 +13,7 @@ public class ZkRepository {
 	private ZkRepository() {
 	}
 
-	private static ZkRepository zkRepository;
+	private volatile static ZkRepository zkRepository;
 
 	public synchronized static ZkRepository newInstance() {
 		if (zkRepository == null) {

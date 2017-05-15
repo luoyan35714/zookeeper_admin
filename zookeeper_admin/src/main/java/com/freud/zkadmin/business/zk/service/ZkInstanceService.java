@@ -1,6 +1,7 @@
 package com.freud.zkadmin.business.zk.service;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.curator.framework.CuratorFramework;
@@ -30,7 +31,8 @@ public class ZkInstanceService {
 		CuratorFramework client = ZkRepository.newInstance().getCuratorFramework();
 		ZkNodeInfo zkNodeInfo = new ZkNodeInfo();
 		zkNodeInfo.setText(new String(client.getData().forPath(path)));
-		Stat stat = client.checkExists().forPath(path);
+		Stat stat = new Stat();
+		client.getData().storingStatIn(stat).forPath(path);
 		zkNodeInfo.setcZxid(stat.getCzxid());
 		zkNodeInfo.setCtime(stat.getCtime());
 		zkNodeInfo.setmZxid(stat.getMzxid());
@@ -45,8 +47,15 @@ public class ZkInstanceService {
 		return zkNodeInfo;
 	}
 
-	private List<ZkTreeNode> getChildrentByPath(String root) throws Exception {
+	public boolean deleteZkNode(String path) throws Exception {
+		CuratorFramework client = ZkRepository.newInstance().getCuratorFramework();
+		client.delete().deletingChildrenIfNeeded().forPath(path);
+		return true;
+	}
 
+	private List<ZkTreeNode> getChildrentByPath(String root) throws Exception {
+		
+		
 		List<ZkTreeNode> list = new ArrayList<ZkTreeNode>();
 		try {
 			List<String> paths = ZkRepository.newInstance().getCuratorFramework().getChildren().forPath(root);

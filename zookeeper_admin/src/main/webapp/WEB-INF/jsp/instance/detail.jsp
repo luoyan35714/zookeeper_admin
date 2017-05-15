@@ -245,13 +245,57 @@ $(function(){
 	});
 	
 	$('#btn-add-subling').on('click', function (e) {
-		$zk_node_tree.treeview('collapseAll', { silent: true });
+		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		if(fullPath.length>1){
+			fullPath = fullPath.substring(1); 
+		}
+		if(fullPath.length>1){
+			var index = fullPath.lastIndexOf("/");
+			if(index==0){
+				fullPath = fullPath.substring(0, 1);	
+			}else{
+				fullPath = fullPath.substring(0, index);
+			}
+		}
+		$("#parentNodeName").val(fullPath);
+		$("#zk_node_add_panel").show();
 	});
+	
 	$('#btn-edit').on('click', function (e) {
-		$zk_node_tree.treeview('collapseAll', { silent: true });
+		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		if(fullPath.length>1){
+			fullPath = fullPath.substring(1); 
+		}
+		if(fullPath.length>1){
+			var index = fullPath.lastIndexOf("/");
+			if(index==0){
+				fullPath = fullPath.substring(0, 1);
+			}else{
+				fullPath = fullPath.substring(0, index);
+			}
+		}
+		$("#parentNodeName").val(fullPath);
+		$("#nodeName").val($zk_node_tree.treeview('getSelected', $zk_node_tree)[0].text);
+		$("#zk_node_add_panel").show();
 	});
+	
 	$('#btn-delete').on('click', function (e) {
-		$zk_node_tree.treeview('collapseAll', { silent: true });
+		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		$.post("${pageContext.request.contextPath}/zk/node",{path:getfullpath(node)},function(data){
+			$("#zknode-data").text(data.text);
+			$("#zknode-czxid").text(data.cZxid);
+			$("#zknode-ctime").text(data.ctime);
+			$("#zknode-mzxid").text(data.mZxid);
+			$("#zknode-mtime").text(data.mtime);
+			$("#zknode-pzxid").text(data.pZxid);
+			$("#zknode-cversion").text(data.cVersion);
+			$("#zknode-dataversion").text(data.dataVersion);
+			$("#zknode-aclversion").text(data.aclVersion);
+			$("#zknode-ephemeralowner").text(data.ephemeralOwner);
+			$("#zknode-datalength").text(data.dataLength);
+			$("#zknode-numchildren").text(data.numChildren);
+		});
+		buildTree();
 	});
 	
 	function getSelectedNodeId(){
