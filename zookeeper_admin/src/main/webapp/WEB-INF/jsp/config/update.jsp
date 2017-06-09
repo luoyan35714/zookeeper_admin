@@ -16,17 +16,14 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>
-							连接信息
+							修改实例信息
 						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<br />
-						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
+						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/config/update" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<input type="hidden" name="id" value="${zkinstance.id }">
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -45,35 +42,33 @@
 									<input type="text" name="port" required="required" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
 								</div>
 							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">auth</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="auth" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">password</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="password" class="form-control col-md-7 col-xs-12" value="${zkinstance.port }">
-								</div>
-							</div>
-							
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">USE</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<div id="gender" class="btn-group" data-toggle="buttons">
-										<label class="use_switch btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-											<input type="radio" name="gender" value="male"> &nbsp; YES &nbsp;
-										</label>
-										<label class="use_switch btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-											<input type="radio" name="gender" value="female"> &nbsp; NO &nbsp;
-										</label>
+											<c:if test="${zkinstance.use==1 }">
+												<label class="use_switch btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="use" value="1" checked="checked"> &nbsp; YES &nbsp;
+												</label>
+												<label class="use_switch btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="use" value="0"> &nbsp; NO &nbsp;
+												</label>
+											</c:if>
+											<c:if test="${zkinstance.use==0 }">
+												<label class="use_switch btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="use" value="1"> &nbsp; YES &nbsp;
+												</label>
+												<label class="use_switch btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="use" value="0" checked="checked"> &nbsp; NO &nbsp;
+												</label>
+											</c:if>
+										
 										<script type="text/javascript">
 											$(".use_switch").click(function(){
 												$(".use_switch").removeClass("btn-primary").addClass("btn-default");
+												$(".use_switch").find("input").removeAttr("checked");
 												$(this).addClass("btn-primary");
+												$(this).find("input").attr("checked","checked");
 											})
 										</script>
 									</div>
