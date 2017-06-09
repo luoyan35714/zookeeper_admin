@@ -7,10 +7,9 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resources/spring/bk_application-datasource.xml</config>
+		<config>src/main/resources/spring/application-datasource.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/resources/spring/application-config.xml</config>
 		<config>src/main/webapp/WEB-INF/zk-admin-servlet.xml</config>
 	</autoconfigs>
 	<configSets>

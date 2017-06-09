@@ -5,8 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+import org.apache.commons.codec.binary.Hex;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+public class EncoderUtil {
+
+	public static String base64Encode(String src) throws IOException {
+		return new BASE64Encoder().encode(src.getBytes());
+	}
+
+	public static String base64Decode(String src) throws IOException {
+		return new String(new BASE64Decoder().decodeBuffer(src));
+	}
+
+	public static String SHA1(String src) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA");
+		md.update(src.getBytes());
+		return Hex.encodeHexString(md.digest());
+	}
 
 	public static String MD5(String s) {
 		if (StringUtils.isEmpty(s) || StringUtils.isBlank(s)) {
@@ -58,8 +78,4 @@ public class MD5Util {
 		return ss;
 	}
 
-	public static void main(String[] args) {
-		String str = "serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)serviceLocator = getDefaultClassLoader().loadClass(SERVICE_LOCATOR_CLASS)";
-		System.out.println(MD5(str));
-	}
 }

@@ -1,7 +1,6 @@
 package com.freud.zkadmin.business.zk.service;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.curator.framework.CuratorFramework;

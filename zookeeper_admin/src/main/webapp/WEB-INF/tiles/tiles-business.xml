@@ -14,4 +14,12 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/config/index.jsp" />
 	</definition>
 	
+	<definition name="config.add" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/config/add.jsp" />
+	</definition>
+	
+	<definition name="config.update" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/config/update.jsp" />
+	</definition>
+	
 </tiles-definitions> 

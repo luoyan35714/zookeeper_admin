@@ -13,6 +13,6 @@ public class BasicController extends BaseController {
 	@RequestMapping({ "", "/", "/index" })
 	public String index() {
 		clearLeftTree();
-		return "redirect:/zk/config";
+		return "redirect:/zk/config/index";
 	}
 }

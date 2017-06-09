@@ -1,6 +1,7 @@
 package com.freud.zkadmin.business.zk.bean;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ZkInstanceBean {
 
@@ -10,6 +11,8 @@ public class ZkInstanceBean {
 	private int port;
 	private int use;
 	private Timestamp operateDate;
+
+	private List<ZkAuth> zkAuths;
 
 	public int getId() {
 		return id;
@@ -57,6 +60,21 @@ public class ZkInstanceBean {
 
 	public void setOperateDate(Timestamp operateDate) {
 		this.operateDate = operateDate;
+	}
+
+	/**
+	 * @return List<ZkAuth> zkAuths.
+	 */
+	public List<ZkAuth> getZkAuths() {
+		return zkAuths;
+	}
+
+	/**
+	 * @param zkAuths
+	 *            The zkAuths to set.
+	 */
+	public void setZkAuths(List<ZkAuth> zkAuths) {
+		this.zkAuths = zkAuths;
 	}
 
 }

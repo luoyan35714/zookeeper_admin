@@ -16,21 +16,18 @@
 	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+
+	<context:component-scan base-package="com.freud" />
+
 	<bean id="springContextHolder" class="com.freud.zkadmin.framework.spring.SpringUtil" />
-	
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations" value="classpath*:/spring/jdbc.properties" />
-	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<!-- Connection Info -->
-		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-		<property name="url" value="jdbc:derby://localhost:1527/freud;create=true" />
-		<property name="username" value="admin" />
-		<property name="password" value="admin" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/zk_admin" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 		
 		<!-- Connection Pooling Info -->
 		<property name="maxActive" value="50" />
