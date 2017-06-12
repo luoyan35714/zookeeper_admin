@@ -1,54 +1,46 @@
 package com.freud.zkadmin.business.zk.repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
+import com.freud.zkadmin.business.zk.bean.ZkAuth;
 import com.freud.zkadmin.business.zk.bean.ZkInstanceBean;
 import com.freud.zkadmin.framework.util.StringConst;
 
-public class ZkRepository {
+public abstract class ZkRepository {
 
-	private ZkRepository() {
-	}
+	private volatile static Map<String, CuratorFramework> zkRepositorys = new HashMap<String, CuratorFramework>();
 
-	private volatile static ZkRepository zkRepository;
-
-	public synchronized static ZkRepository newInstance() {
-		if (zkRepository == null) {
-			zkRepository = new ZkRepository();
-		}
-		return zkRepository;
-	}
-
-	private ZkInstanceBean zkInstanceBean;
-
-	private CuratorFramework curatorFramework;
-
-	public ZkInstanceBean getZkInstanceBean() {
-		return zkInstanceBean;
-	}
-
-	public void setZkInstanceBean(ZkInstanceBean zkInstanceBean) {
-		this.zkInstanceBean = zkInstanceBean;
-	}
-
-	public CuratorFramework getCuratorFramework() {
-		if (curatorFramework == null) {
-			if (zkInstanceBean == null) {
-				return null;
-			} else {
-				RetryPolicy rp = new ExponentialBackoffRetry(1 * StringConst.SECOND, 3);
-				curatorFramework = CuratorFrameworkFactory.builder()
-						.connectString(zkInstanceBean.getIp() + ":" + zkInstanceBean.getPort())
-						.sessionTimeoutMs(5 * StringConst.SECOND).connectionTimeoutMs(3 * StringConst.SECOND)
-						.retryPolicy(rp).build();
-				curatorFramework.start();
-				return curatorFramework;
+	public synchronized static CuratorFramework newCuratorInstance(ZkInstanceBean instanceBean) throws Exception {
+		String uniqueId = instanceBean.getIp() + ":" + instanceBean.getPort();
+		if (!zkRepositorys.containsKey(uniqueId)) {
+			synchronized (zkRepositorys) {
+				if (!zkRepositorys.containsKey(uniqueId)) {
+					zkRepositorys.put(uniqueId, getCuratorFramework(uniqueId));
+				}
 			}
 		}
-		return curatorFramework;
+		CuratorFramework curator = zkRepositorys.get(uniqueId);
+		synchronized (curator) {
+			for (ZkAuth auth : instanceBean.getZkAuths()) {
+				curator.getZookeeperClient().getZooKeeper()
+						.addAuthInfo("digest", (auth.getAuth() + ":" + auth.getPass()).getBytes());
+			}
+		}
+		return curator;
 	}
 
+	private static CuratorFramework getCuratorFramework(String uniqueId) {
+		RetryPolicy rp = new ExponentialBackoffRetry(1 * StringConst.SECOND, 3);
+		CuratorFramework curator = CuratorFrameworkFactory.builder().connectString(uniqueId)
+				.sessionTimeoutMs(5 * StringConst.SECOND).connectionTimeoutMs(3 * StringConst.SECOND).retryPolicy(rp)
+				.build();
+		curator.start();
+		return curator;
+	}
 }

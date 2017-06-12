@@ -5,33 +5,33 @@ import java.util.List;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.KeeperException.NoNodeException;
+import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.springframework.stereotype.Service;
 
-import com.freud.zkadmin.business.zk.repository.ZkRepository;
 import com.freud.zkadmin.business.zk.vo.ZkNodeInfo;
 import com.freud.zkadmin.business.zk.vo.ZkTreeNode;
 
 @Service
 public class ZkInstanceService {
 
-	public List<ZkTreeNode> getZkTree(int id) throws Exception {
+	public List<ZkTreeNode> getZkTree(int id, CuratorFramework curator) throws Exception {
 		List<ZkTreeNode> list = new ArrayList<ZkTreeNode>();
 		ZkTreeNode node = new ZkTreeNode();
 		node.setText("/");
 		node.setHref("#");
-		node.setNodes(this.getChildrentByPath("/"));
+		node.setNodes(this.getChildrentByPath("/", curator));
 		list.add(node);
 		return list;
 	}
 
-	public ZkNodeInfo getZkNode(String path) throws Exception {
+	public ZkNodeInfo getZkNode(String path, CuratorFramework curator) throws Exception {
 		path = path.trim().length() > 1 ? path.trim().substring(1) : path.trim();
-		CuratorFramework client = ZkRepository.newInstance().getCuratorFramework();
+
 		ZkNodeInfo zkNodeInfo = new ZkNodeInfo();
-		zkNodeInfo.setText(new String(client.getData().forPath(path)));
+		zkNodeInfo.setText(new String(curator.getData().forPath(path)));
 		Stat stat = new Stat();
-		client.getData().storingStatIn(stat).forPath(path);
+		curator.getData().storingStatIn(stat).forPath(path);
 		zkNodeInfo.setcZxid(stat.getCzxid());
 		zkNodeInfo.setCtime(stat.getCtime());
 		zkNodeInfo.setmZxid(stat.getMzxid());
@@ -46,24 +46,31 @@ public class ZkInstanceService {
 		return zkNodeInfo;
 	}
 
-	public boolean deleteZkNode(String path) throws Exception {
-		CuratorFramework client = ZkRepository.newInstance().getCuratorFramework();
-		client.delete().deletingChildrenIfNeeded().forPath(path);
-		return true;
+	public List<ACL> getAcls(String path, CuratorFramework curator) throws Exception {
+		path = path.trim().length() > 1 ? path.trim().substring(1) : path.trim();
+		return curator.getACL().forPath(path);
 	}
 
-	private List<ZkTreeNode> getChildrentByPath(String root) throws Exception {
-		
-		
+	public boolean deleteZkNode(String path, CuratorFramework curator) {
+		try {
+			curator.delete().deletingChildrenIfNeeded().forPath(path);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private List<ZkTreeNode> getChildrentByPath(String root, CuratorFramework curator) throws Exception {
+
 		List<ZkTreeNode> list = new ArrayList<ZkTreeNode>();
 		try {
-			List<String> paths = ZkRepository.newInstance().getCuratorFramework().getChildren().forPath(root);
+			List<String> paths = curator.getChildren().forPath(root);
 			for (String path : paths) {
 				ZkTreeNode node = new ZkTreeNode();
 				node.setHref("#" + path);
 				path = "/" + path;
 				node.setText(path);
-				node.setNodes(this.getChildrentByPath(path));
+				node.setNodes(this.getChildrentByPath(path, curator));
 				list.add(node);
 			}
 		} catch (NoNodeException e) {

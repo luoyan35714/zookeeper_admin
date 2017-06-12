@@ -23,6 +23,7 @@ public class ZkController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("config.index");
 		mav.addObject("zkinstances", zkService.getAll(new RowBounds()));
+		mav.addObject("zks", zkService.getAll(new RowBounds()));
 		return mav;
 	}
 
@@ -31,6 +32,7 @@ public class ZkController extends BaseController {
 		setLeftTree("zk_config_add");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("config.add");
+		mav.addObject("zks", zkService.getAll(new RowBounds()));
 		return mav;
 	}
 
@@ -46,6 +48,7 @@ public class ZkController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("config.update");
 		mav.addObject("zkinstance", zkService.get(id));
+		mav.addObject("zks", zkService.getAll(new RowBounds()));
 		return mav;
 	}
 

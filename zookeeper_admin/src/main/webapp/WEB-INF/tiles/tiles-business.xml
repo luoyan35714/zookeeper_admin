@@ -5,10 +5,6 @@
 	   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-
-	<definition name="instance.detail" extends="base.definition">
-		<put-attribute name="body" value="/WEB-INF/jsp/instance/detail.jsp" />
-	</definition>
 	
 	<definition name="config.index" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/config/index.jsp" />
@@ -20,6 +16,22 @@
 	
 	<definition name="config.update" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/config/update.jsp" />
+	</definition>
+	
+	<definition name="instance.detail" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/instance/detail.jsp" />
+	</definition>
+	
+	<definition name="zk.instance.auth.index" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/instance/auth/index.jsp" />
+	</definition>
+	
+	<definition name="zk.instance.auth.add" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/instance/auth/add.jsp" />
+	</definition>
+	
+	<definition name="zk.instance.auth.edit" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/instance/auth/update.jsp" />
 	</definition>
 	
 </tiles-definitions> 

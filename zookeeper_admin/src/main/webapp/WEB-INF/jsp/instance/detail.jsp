@@ -20,7 +20,6 @@
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -36,6 +35,25 @@
 						<a class="btn btn-app" id="btn-add-subling"><i class="fa fa-edit"></i> Add subling Node</a>
                     	<a class="btn btn-app" id="btn-edit"><i class="fa fa-save"></i> Edit nde</a>
                     	<a class="btn btn-app" id="btn-delete"><i class="fa fa-pause"></i> Delete</a>
+                    	
+                    	<a class="btn btn-app" id="btn-detail"><i class="fa fa-pause"></i>Detail</a>
+                    	<a class="btn btn-app" id="btn-acl"><i class="fa fa-pause"></i>ACL</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row" id="error_show">
+			<div class="col-md-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2 style="color:RED;">
+							Error<small id="error_show_msg"></small>
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
@@ -45,11 +63,16 @@
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>
-							节点树
+							节点树 
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
+							<li class="dropdown">
+		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+		                        <ul class="dropdown-menu" role="menu">
+		                          <li><a href="${pageContext.request.contextPath}/zk/instance/auth/index?instanceId=${zkinstance.id }">设置权限信息</a></li>
+		                        </ul>
+		                      </li>
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -71,7 +94,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
+						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/instance/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
 							<div class="ln_solid"></div>
 							<div class="form-group">
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Node Name : <span class="required">*</span></label>
@@ -100,6 +123,22 @@
 						</form>
 					</div>
 				</div>
+				<div id="zk_node_acl_panel" class="x_panel" >
+					<div class="x_title">
+						<h2>
+							ACL信息
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+							<li><a class="close-link-new"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<table class="countries_list">
+						</table>
+					</div>
+				</div>
 				<div id="zk_node_detail_panel" class="x_panel">
 					<div class="x_title">
 						<h2>
@@ -107,7 +146,7 @@
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							<li><a class="close-link-new"><i class="fa fa-close"></i></a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
@@ -177,31 +216,30 @@ $(function(){
 	var selectedNodeId;
 	buildTree();
 	$("#zk_node_add_panel").hide();
+	$("#zk_node_acl_panel").hide();
+	hideError();
 	// 构建节点树
 	function buildTree(){
-		$.post("${pageContext.request.contextPath}/zk/tree",{id:"${zkinstance.port }"},function(data){
-			$zk_node_tree = $('#zk_node_tree').treeview(
-				{
-					color: "#428bca",
-					data: data,
-					onNodeSelected: function(event, node){
-						selectedNodeId = node.nodeId;
-						$.post("${pageContext.request.contextPath}/zk/node",{path:getfullpath(node)},function(data){
-							$("#zknode-data").text(data.text);
-							$("#zknode-czxid").text(data.cZxid);
-							$("#zknode-ctime").text(data.ctime);
-							$("#zknode-mzxid").text(data.mZxid);
-							$("#zknode-mtime").text(data.mtime);
-							$("#zknode-pzxid").text(data.pZxid);
-							$("#zknode-cversion").text(data.cVersion);
-							$("#zknode-dataversion").text(data.dataVersion);
-							$("#zknode-aclversion").text(data.aclVersion);
-							$("#zknode-ephemeralowner").text(data.ephemeralOwner);
-							$("#zknode-datalength").text(data.dataLength);
-							$("#zknode-numchildren").text(data.numChildren);
-						});
-					}
-				});
+		$.post("${pageContext.request.contextPath}/zk/instance/tree",{id:"${zkinstance.id }"},function(data){
+			if(data.code==200){
+				$zk_node_tree = $('#zk_node_tree').treeview(
+					{
+						color: "#428bca",
+						data: data.data,
+						onNodeSelected: function(event, node){
+							selectedNodeId = node.nodeId;
+							$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath(node),id:"${zkinstance.id }"},function(data){
+								if(data.code==200){
+									showNodeData(data.data);
+								}else{
+									showError(data);
+								}
+							});
+						}
+					});
+			}else{
+				showError(data);
+			}
 		});
 	}
 	
@@ -281,21 +319,48 @@ $(function(){
 	
 	$('#btn-delete').on('click', function (e) {
 		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
-		$.post("${pageContext.request.contextPath}/zk/node",{path:getfullpath(node)},function(data){
-			$("#zknode-data").text(data.text);
-			$("#zknode-czxid").text(data.cZxid);
-			$("#zknode-ctime").text(data.ctime);
-			$("#zknode-mzxid").text(data.mZxid);
-			$("#zknode-mtime").text(data.mtime);
-			$("#zknode-pzxid").text(data.pZxid);
-			$("#zknode-cversion").text(data.cVersion);
-			$("#zknode-dataversion").text(data.dataVersion);
-			$("#zknode-aclversion").text(data.aclVersion);
-			$("#zknode-ephemeralowner").text(data.ephemeralOwner);
-			$("#zknode-datalength").text(data.dataLength);
-			$("#zknode-numchildren").text(data.numChildren);
+		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath(node),id:"${zkinstance.id }"},function(data){
+			if(data.code==200){
+				showNodeData(data.data);
+			}else{
+				showError(data);
+			}
 		});
 		buildTree();
+	});
+	
+	$('#btn-detail').on('click', function (e) {
+		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]),id:"${zkinstance.id }"},function(data){
+			if(data.code==200){
+				showNodeData(data.data);
+			}else{
+				showError(data);
+			}
+		});
+	});
+	
+	$('#btn-acl').on('click', function (e) {
+		$.post("${pageContext.request.contextPath}/zk/instance/acl",{path:getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]),id:"${zkinstance.id }"},function(data){
+			if(data.code==200){
+				$("#zk_node_acl_panel").show();
+				$("#zk_node_acl_panel .x_content .countries_list").text("");
+				$("#zk_node_acl_panel .x_content .countries_list").append('<thead>'
+																		+ '<tr>'
+																		+ '    <th>Scheme</th>'
+																		+ '    <th class="fs15 fw700 text-right">ID</th>'
+																		+ '</tr>'
+																		+ '</thead>');
+				for (var i=0;i<data.data.length;i++)
+				{
+					$("#zk_node_acl_panel .x_content .countries_list").append('<tr>'
+                    										+ '<td>' + data.data[i].id.scheme + '</td>'
+                    										+ '<td class="fs15 fw700 text-right">' + data.data[i].id.id + '</td>'
+                    										+ '</tr>');
+				}
+			}else{
+				showError(data);
+			}
+		});
 	});
 	
 	function getSelectedNodeId(){
@@ -305,5 +370,36 @@ $(function(){
 			return selectedNodeId;
 		}
 	}
+	
+	function showNodeData(data){
+		$("#zk_node_detail_panel").show();
+		
+		$("#zknode-data").text(data.text);
+		$("#zknode-czxid").text(data.cZxid);
+		$("#zknode-ctime").text(data.ctime);
+		$("#zknode-mzxid").text(data.mZxid);
+		$("#zknode-mtime").text(data.mtime);
+		$("#zknode-pzxid").text(data.pZxid);
+		$("#zknode-cversion").text(data.cVersion);
+		$("#zknode-dataversion").text(data.dataVersion);
+		$("#zknode-aclversion").text(data.aclVersion);
+		$("#zknode-ephemeralowner").text(data.ephemeralOwner);
+		$("#zknode-datalength").text(data.dataLength);
+		$("#zknode-numchildren").text(data.numChildren);
+	}
+	
+	function hideError(){
+		$("#error_show").hide();
+		$("#error_show_msg").text();
+	}
+	
+	function showError(data){
+		$("#error_show").show();
+		$("#error_show_msg").text(data.data);
+	}
+	
+	$(".close-link-new").click(function(e){
+		$(this).parents(".x_panel").hide();
+	})
 });
 </script>

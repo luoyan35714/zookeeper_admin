@@ -23,8 +23,10 @@
                     </li>
                     <li><a><i class="fa fa-desktop"></i> Zookeeper 实例 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu" style="display: none">
-                        	<c:if test="${zkinstance!=null }">
-                            	<li><a id="zk_instance_detail" href="${pageContext.request.contextPath}/zk/detail?id=${zkinstance.id }">${zkinstance.name }</a></li>
+                        	<c:if test="${zks!=null }">
+                        		<c:forEach items="${zks }" var="zk">
+                            	<li><a id="zk_instance_detail_${zk.id }" href="${pageContext.request.contextPath}/zk/instance/detail?id=${zk.id }">${zk.name }</a></li>
+                            	</c:forEach>
                             </c:if>
                         </ul>
                     </li>

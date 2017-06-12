@@ -41,7 +41,7 @@
 	                         <td>${zkinstance.port }</td>
 	                         <td>${zkinstance.use=='1'?'是':'否' }</td>
 	                         <td>${zkinstance.operateDate }</td>
-	                         <td><a href="${pageContext.request.contextPath}/zk/config/edit?id=${zkinstance.id }" class="btn btn-primary">DETAIL</a></td>
+	                         <td><a href="${pageContext.request.contextPath}/zk/instance/detail?id=${zkinstance.id }" class="btn btn-primary">DETAIL</a></td>
 	                         <td><a href="${pageContext.request.contextPath}/zk/config/edit?id=${zkinstance.id }" class="btn btn-success">UPDATE</a></td>
                          	 <td><a href="${pageContext.request.contextPath}/zk/config/delete?id=${zkinstance.id }" class="btn btn-warning">DELETE</a></td>
 	                       </tr>

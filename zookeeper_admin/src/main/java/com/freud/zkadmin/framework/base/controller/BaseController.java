@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.freud.zkadmin.business.zk.vo.ResponseInfo;
 import com.freud.zkadmin.framework.exception.ServiceRuntimeException;
 
 public abstract class BaseController {
@@ -78,6 +79,16 @@ public abstract class BaseController {
 		mav.addObject(ERROR_KEY_MESSAGE, errorMessage);
 
 		return mav;
+	}
+
+	public static final Integer CODE_SUCCESS = 200;
+	public static final Integer CODE_FAIL = 300;
+
+	public ResponseInfo buildResponseInfo(Integer code, Object data) {
+		ResponseInfo response = new ResponseInfo();
+		response.setCode(code);
+		response.setData(data);
+		return response;
 	}
 
 }

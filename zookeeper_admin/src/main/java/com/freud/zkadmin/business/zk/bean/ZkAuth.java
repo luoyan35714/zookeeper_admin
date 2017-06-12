@@ -3,7 +3,7 @@
  * Date: 2017年6月9日 <br>
  * Copyright (c) 2017 Wolfly <br>
  * 
- * @author neusoft
+ * @author Freud
  * @version V1.0
  */
 package com.freud.zkadmin.business.zk.bean;
@@ -12,7 +12,7 @@ package com.freud.zkadmin.business.zk.bean;
  * @Description: TODO <br>
  * @date 2017年6月9日 上午9:24:17 <br>
  * 
- * @author neusoft
+ * @author Freud
  */
 public class ZkAuth {
 
