@@ -7,7 +7,7 @@
 <div class="footer">
 	<div>
 		<div class="col-lg-12" style="color: white;">
-			Copyright &copy; 2016-<%=new SimpleDateFormat("yyyy").format(new Date()) %> <a href="http://www.hifreud.com/">Freud Kang</a>
+			Copyright &copy; 2016-<%=new SimpleDateFormat("yyyy").format(new Date()) %> <a href="http://www.hifreud.com/">Freud Kang</a> Powered by<a href="https://github.com/puikinsh/gentelella">gentelella</a>
 		</div>
 	</div>
 </div>
