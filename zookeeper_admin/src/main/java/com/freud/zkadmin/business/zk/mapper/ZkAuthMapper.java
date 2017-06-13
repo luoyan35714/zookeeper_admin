@@ -1,12 +1,3 @@
-/**
- * Description:[For Wolfly] <br>
- * Date: 2017年6月8日 <br>
- * Copyright (c) 2017 Wolfly <br>
- * 
- * @author Freud
- * @version V1.0
- */
-
 package com.freud.zkadmin.business.zk.mapper;
 
 import java.util.List;
