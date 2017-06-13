@@ -21,14 +21,16 @@ USE `zk_admin`;
 DROP TABLE IF EXISTS `zk_auth`;
 
 CREATE TABLE `zk_auth` (
-  `id` int(20) NOT NULL,
+  `id` int(20) NOT NULL AUTO_INCREMENT,
   `instance_id` int(20) DEFAULT NULL,
   `auth` varchar(64) DEFAULT NULL,
   `pass` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `zk_auth` */
+
+insert  into `zk_auth`(`id`,`instance_id`,`auth`,`pass`) values (2,1,'admin','admin'),(3,10,'admin','admin');
 
 /*Table structure for table `zk_instance` */
 
@@ -42,11 +44,11 @@ CREATE TABLE `zk_instance` (
   `USE` tinyint(1) NOT NULL COMMENT '是否可用',
   `operate_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `zk_instance` */
 
-insert  into `zk_instance`(`ID`,`NAME`,`IP`,`PORT`,`USE`,`operate_date`) values (1,'Freud','10.1.5.123',88,1,'2017-06-09 11:52:33'),(2,'fff','10.1.5.234',8809,0,'2017-06-09 11:29:06');
+insert  into `zk_instance`(`ID`,`NAME`,`IP`,`PORT`,`USE`,`operate_date`) values (1,'Freud','10.1.5.123',2181,1,'2017-06-09 11:52:33'),(10,'localhost','localhost',2181,1,'2017-06-12 17:39:09');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
