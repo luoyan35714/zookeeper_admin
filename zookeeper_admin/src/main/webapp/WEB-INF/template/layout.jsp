@@ -28,7 +28,7 @@
 		<link href="${pageContext.request.contextPath}/resources/css/tree/bootstrap-treeview.min.css" rel="stylesheet">
 		 
 		<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-		 		<script src="${pageContext.request.contextPath}/resources/js/tree/bootstrap-treeview.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/tree/bootstrap-treeview.min.js"></script>
 	
 		<!--[if lt IE 9]>
 		<script src="${pageContext.request.contextPath}/resources/js/ie8-responsive-file-warning.js"></script>

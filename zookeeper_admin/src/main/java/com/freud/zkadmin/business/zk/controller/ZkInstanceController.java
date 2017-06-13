@@ -12,7 +12,9 @@ import com.freud.zkadmin.business.zk.bean.ZkAuth;
 import com.freud.zkadmin.business.zk.repository.ZkRepository;
 import com.freud.zkadmin.business.zk.service.ZkInstanceService;
 import com.freud.zkadmin.business.zk.service.ZkService;
+import com.freud.zkadmin.business.zk.vo.EditNodeRequest;
 import com.freud.zkadmin.business.zk.vo.ResponseInfo;
+import com.freud.zkadmin.business.zk.vo.SetACLRequest;
 import com.freud.zkadmin.framework.base.controller.BaseController;
 
 @Controller
@@ -71,6 +73,12 @@ public class ZkInstanceController extends BaseController {
 		}
 	}
 
+	@RequestMapping("/setacl")
+	public String setacl(SetACLRequest setAclRequest) throws Exception {
+		zkInstanceService.setAcls(setAclRequest, ZkRepository.newCuratorInstance(zkService.get(setAclRequest.getId())));
+		return "redirect:/zk/instance/detail?id=" + setAclRequest.getId();
+	}
+
 	@RequestMapping("/delete")
 	@ResponseBody
 	public ResponseInfo delete(@RequestParam("path") String path, @RequestParam("id") Integer id) throws Exception {
@@ -81,6 +89,13 @@ public class ZkInstanceController extends BaseController {
 			e.printStackTrace();
 			return buildResponseInfo(CODE_FAIL, e.getMessage());
 		}
+	}
+
+	@RequestMapping("/edit")
+	public String edit(EditNodeRequest editNodeRequest) throws Exception {
+		zkInstanceService.editZkNode(editNodeRequest,
+				ZkRepository.newCuratorInstance(zkService.get(editNodeRequest.getId())));
+		return "redirect:/zk/instance/detail?id=" + editNodeRequest.getId();
 	}
 
 	@RequestMapping("/auth/index")

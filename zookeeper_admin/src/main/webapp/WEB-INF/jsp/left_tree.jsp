@@ -30,11 +30,11 @@
                             </c:if>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-bar-chart-o"></i> 统计 <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu" style="display: none">
-                            <li><a id="zk_statistics_node" href="chartjs.html">Chart JS</a></li>
-                        </ul>
-                    </li>
+<!--                     <li><a><i class="fa fa-bar-chart-o"></i> 统计 <span class="fa fa-chevron-down"></span></a> -->
+<!--                         <ul class="nav child_menu" style="display: none"> -->
+<!--                             <li><a id="zk_statistics_node" href="chartjs.html">Chart JS</a></li> -->
+<!--                         </ul> -->
+<!--                     </li> -->
                 </ul>
             </div>
         </div>

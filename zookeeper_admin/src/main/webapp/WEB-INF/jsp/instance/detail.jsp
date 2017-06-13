@@ -24,20 +24,21 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<a class="btn btn-app" id="btn-expand-node"><i class="fa fa-repeat"></i> Expand Node</a>
-						<a class="btn btn-app" id="btn-collapse-node"><i class="fa fa-repeat"></i> Collapse Node</a>
-						<a class="btn btn-app" id="btn-toggle-expanded"><i class="fa fa-bullhorn"></i> Toggle Node</a>
+						<a class="btn btn-app" id="btn-expand-node"><i class="fa fa-refresh"></i> Expand Node</a>
+						<a class="btn btn-app" id="btn-collapse-node"><i class="fa fa-refresh"></i> Collapse Node</a>
+						<a class="btn btn-app" id="btn-toggle-expanded"><i class="fa fa-refresh"></i> Toggle Node</a>
 
-						<a class="btn btn-app" id="btn-expand-all"><i class="fa fa-inbox"></i> Expand All</a>
-						<a class="btn btn-app" id="btn-collapse-all"><i class="fa fa-inbox"></i> Collapse All</a>
+						<a class="btn btn-app" id="btn-expand-all"><i class="fa fa-repeat"></i> Expand All</a>
+						<a class="btn btn-app" id="btn-collapse-all"><i class="fa fa-repeat"></i> Collapse All</a>
 						
 						<a class="btn btn-app" id="btn-add-child"><i class="fa fa-edit"></i> Add Child Node</a>
 						<a class="btn btn-app" id="btn-add-subling"><i class="fa fa-edit"></i> Add subling Node</a>
-                    	<a class="btn btn-app" id="btn-edit"><i class="fa fa-save"></i> Edit nde</a>
-                    	<a class="btn btn-app" id="btn-delete"><i class="fa fa-pause"></i> Delete</a>
+                    	<a class="btn btn-app" id="btn-edit"><i class="fa fa-edit"></i> Edit nde</a>
+                    	<a class="btn btn-app" id="btn-delete"><i class="fa fa-edit"></i> Delete</a>
                     	
                     	<a class="btn btn-app" id="btn-detail"><i class="fa fa-pause"></i>Detail</a>
                     	<a class="btn btn-app" id="btn-acl"><i class="fa fa-pause"></i>ACL</a>
+                    	<a class="btn btn-app" id="btn-set-acl"><i class="fa fa-pause"></i>SET ACL</a>
 					</div>
 				</div>
 			</div>
@@ -82,19 +83,20 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div id="zk_node_add_panel" class="x_panel " >
+				<div id="zk_node_add_panel" class="x_panel" >
 					<div class="x_title">
 						<h2>
 							添加或修改节点信息
 						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+							<li><a class="close-link-new"><i class="fa fa-close"></i></a></li>
 						</ul>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/instance/add" method="post" data-parsley-validate class="form-horizontal form-label-left">
+						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/instance/edit" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<input type="hidden" name="id" value="${zkinstance.id }">
 							<div class="ln_solid"></div>
 							<div class="form-group">
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Node Name : <span class="required">*</span></label>
@@ -112,6 +114,43 @@
                         		<label class="control-label col-md-3 col-sm-3 col-xs-12">Node Data : </label>
                         		<div class="col-md-6 col-sm-6 col-xs-12">
                           			<textarea rows="5" id="nodeData" name="nodeData" class="form-control col-md-7 col-xs-12"></textarea>
+                        		</div>
+                      		</div>
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+									<button type="submit" class="btn btn-success">Save</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="zk_node_set_acl_panel" class="x_panel" >
+					<div class="x_title">
+						<h2>
+							设置节点ACL信息
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+							<li><a class="close-link-new"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<form id="demo-form2" action="${pageContext.request.contextPath}/zk/instance/setacl" method="post" data-parsley-validate class="form-horizontal form-label-left">
+							<input type="hidden" name="id" value="${zkinstance.id }">
+							<div class="ln_solid"></div>
+							<div class="form-group">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Node Path: <span class="required">*</span></label>
+                        		<div class="col-md-6 col-sm-6 col-xs-12">
+                          			<input type="text" id="nodePathACL" name="nodePathACL" required="required" class="form-control col-md-7 col-xs-12">
+                        		</div>
+                      		</div>
+                      		<div class="form-group">
+                        		<label class="control-label col-md-3 col-sm-3 col-xs-12">ACL: <span class="required">*</span></label>
+                        		<div class="col-md-6 col-sm-6 col-xs-12">
+                          			<input type="text" id="acls" name="acls" placeholder="scheme:auth:perms;scheme:auth:perms" required="required" class="form-control col-md-7 col-xs-12">
+                          			<a href="http://www.hifreud.com/2017/01/08/zookeeper-05-acl/" style="padding-top: 10px;font-size: 14px;" target="_blank">ACL配置详细讲解</a>
                         		</div>
                       		</div>
 							<div class="ln_solid"></div>
@@ -217,6 +256,7 @@ $(function(){
 	buildTree();
 	$("#zk_node_add_panel").hide();
 	$("#zk_node_acl_panel").hide();
+	$("#zk_node_set_acl_panel").hide();
 	hideError();
 	// 构建节点树
 	function buildTree(){
@@ -228,13 +268,7 @@ $(function(){
 						data: data.data,
 						onNodeSelected: function(event, node){
 							selectedNodeId = node.nodeId;
-							$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath(node),id:"${zkinstance.id }"},function(data){
-								if(data.code==200){
-									showNodeData(data.data);
-								}else{
-									showError(data);
-								}
-							});
+							showNodeData(getfullpath(node),"${zkinstance.id }");
 						}
 					});
 			}else{
@@ -279,13 +313,15 @@ $(function(){
 			fullPath = fullPath.toString().substring(1); 
 		}
 		$("#parentNodeName").val(fullPath);
+		$("#nodeName").val("");
+		$("#nodeData").val("");
 		$("#zk_node_add_panel").show();
 	});
 	
 	$('#btn-add-subling').on('click', function (e) {
 		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
 		if(fullPath.length>1){
-			fullPath = fullPath.substring(1); 
+			fullPath = fullPath.substring(1);
 		}
 		if(fullPath.length>1){
 			var index = fullPath.lastIndexOf("/");
@@ -296,11 +332,14 @@ $(function(){
 			}
 		}
 		$("#parentNodeName").val(fullPath);
+		$("#nodeName").val("");
+		$("#nodeData").val("");
 		$("#zk_node_add_panel").show();
 	});
 	
 	$('#btn-edit').on('click', function (e) {
 		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		var fullPathTmp = fullPath; 
 		if(fullPath.length>1){
 			fullPath = fullPath.substring(1); 
 		}
@@ -313,30 +352,31 @@ $(function(){
 			}
 		}
 		$("#parentNodeName").val(fullPath);
-		$("#nodeName").val($zk_node_tree.treeview('getSelected', $zk_node_tree)[0].text);
-		$("#zk_node_add_panel").show();
+		var currentnodeName = $zk_node_tree.treeview('getSelected', $zk_node_tree)[0].text;
+		$("#nodeName").val(currentnodeName);
+		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:fullPathTmp,id:"${zkinstance.id }"},function(data){
+			if(data.code==200){
+				$("#nodeData").val(data.data.text);
+				$("#zk_node_add_panel").show();
+			}else{
+				showError(data);
+			}
+		});
 	});
 	
 	$('#btn-delete').on('click', function (e) {
-		var fullPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
-		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath(node),id:"${zkinstance.id }"},function(data){
+		$.post("${pageContext.request.contextPath}/zk/instance/delete",{path:getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]),id:"${zkinstance.id }"},function(data){
 			if(data.code==200){
-				showNodeData(data.data);
+				buildTree();
 			}else{
 				showError(data);
 			}
 		});
-		buildTree();
+		
 	});
 	
 	$('#btn-detail').on('click', function (e) {
-		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]),id:"${zkinstance.id }"},function(data){
-			if(data.code==200){
-				showNodeData(data.data);
-			}else{
-				showError(data);
-			}
-		});
+		showNodeData(getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]),"${zkinstance.id }");
 	});
 	
 	$('#btn-acl').on('click', function (e) {
@@ -363,6 +403,15 @@ $(function(){
 		});
 	});
 	
+	$('#btn-set-acl').on('click', function (e) {
+		var currentPath = getfullpath($zk_node_tree.treeview('getSelected', $zk_node_tree)[0]);
+		if(currentPath.length>1){
+			currentPath = currentPath.substring(1);
+		}
+		$("#nodePathACL").val(currentPath);
+		$("#zk_node_set_acl_panel").show();
+	});
+	
 	function getSelectedNodeId(){
 		if(selectedNodeId == null || selectedNodeId==undefined){
 			return $zk_node_tree.treeview('search', [ '/', { ignoreCase: false, exactMatch: true } ]);
@@ -371,21 +420,27 @@ $(function(){
 		}
 	}
 	
-	function showNodeData(data){
-		$("#zk_node_detail_panel").show();
-		
-		$("#zknode-data").text(data.text);
-		$("#zknode-czxid").text(data.cZxid);
-		$("#zknode-ctime").text(data.ctime);
-		$("#zknode-mzxid").text(data.mZxid);
-		$("#zknode-mtime").text(data.mtime);
-		$("#zknode-pzxid").text(data.pZxid);
-		$("#zknode-cversion").text(data.cVersion);
-		$("#zknode-dataversion").text(data.dataVersion);
-		$("#zknode-aclversion").text(data.aclVersion);
-		$("#zknode-ephemeralowner").text(data.ephemeralOwner);
-		$("#zknode-datalength").text(data.dataLength);
-		$("#zknode-numchildren").text(data.numChildren);
+	function showNodeData(path,id){
+		$.post("${pageContext.request.contextPath}/zk/instance/node",{path:path,id:id},function(data){
+			if(data.code==200){
+				$("#zk_node_detail_panel").show();
+				
+				$("#zknode-data").text(data.data.text);
+				$("#zknode-czxid").text(data.data.cZxid);
+				$("#zknode-ctime").text(data.data.ctime);
+				$("#zknode-mzxid").text(data.data.mZxid);
+				$("#zknode-mtime").text(data.data.mtime);
+				$("#zknode-pzxid").text(data.data.pZxid);
+				$("#zknode-cversion").text(data.data.cVersion);
+				$("#zknode-dataversion").text(data.data.dataVersion);
+				$("#zknode-aclversion").text(data.data.aclVersion);
+				$("#zknode-ephemeralowner").text(data.data.ephemeralOwner);
+				$("#zknode-datalength").text(data.data.dataLength);
+				$("#zknode-numchildren").text(data.data.numChildren);
+			}else{
+				showError(data);
+			}
+		});
 	}
 	
 	function hideError(){
