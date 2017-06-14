@@ -1,0 +1,4 @@
+language: java
+script: mvn clean verify install
+notifications:
+  email: luoyan35714@126.com
