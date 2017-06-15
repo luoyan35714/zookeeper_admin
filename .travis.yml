@@ -1,8 +1,8 @@
 language: java
 script: mvn clean verify install
 notifications:
-  email: luoyan35714@126.com
-  recipients:
-      - luoyan35714@126.com
-    on_success: never
-    on_failure: always
+  email: true
+    recipients:
+        - luoyan35714@126.com
+      on_success: never
+      on_failure: always
