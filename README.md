@@ -13,9 +13,9 @@ Zookeeper_admin是一款基于Java EE的Zookeeper后台管理系统。实现了�
 
 通过如下命令从github下载本项目代码。
 
-{% highlight bash %}
+``` bash
 git clone https://github.com/luoyan35714/zookeeper_admin.git
-{% endhighlight %}
+```
 
 ### 导入IDE
 
