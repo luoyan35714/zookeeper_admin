@@ -14,23 +14,19 @@ import com.freud.zkadmin.framework.util.StringConst;
 
 public abstract class ZkRepository {
 
-	private volatile static Map<String, CuratorFramework> zkRepositorys = new HashMap<String, CuratorFramework>();
+	private static Map<String, CuratorFramework> zkRepositorys = new HashMap<String, CuratorFramework>();
 
 	public synchronized static CuratorFramework newCuratorInstance(ZkInstanceBean instanceBean) throws Exception {
 		String uniqueId = instanceBean.getIp() + ":" + instanceBean.getPort();
 		if (!zkRepositorys.containsKey(uniqueId)) {
-			synchronized (zkRepositorys) {
-				if (!zkRepositorys.containsKey(uniqueId)) {
-					zkRepositorys.put(uniqueId, getCuratorFramework(uniqueId));
-				}
+			if (!zkRepositorys.containsKey(uniqueId)) {
+				zkRepositorys.put(uniqueId, getCuratorFramework(uniqueId));
 			}
 		}
 		CuratorFramework curator = zkRepositorys.get(uniqueId);
-		synchronized (curator) {
-			for (ZkAuth auth : instanceBean.getZkAuths()) {
-				curator.getZookeeperClient().getZooKeeper()
-						.addAuthInfo("digest", (auth.getAuth() + ":" + auth.getPass()).getBytes());
-			}
+		for (ZkAuth auth : instanceBean.getZkAuths()) {
+			curator.getZookeeperClient().getZooKeeper().addAuthInfo("digest",
+					(auth.getAuth() + ":" + auth.getPass()).getBytes());
 		}
 		return curator;
 	}

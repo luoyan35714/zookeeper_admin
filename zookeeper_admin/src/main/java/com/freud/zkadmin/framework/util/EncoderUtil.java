@@ -9,18 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.binary.Hex;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 public class EncoderUtil {
-
-	public static String base64Encode(String src) throws IOException {
-		return new BASE64Encoder().encode(src.getBytes());
-	}
-
-	public static String base64Decode(String src) throws IOException {
-		return new String(new BASE64Decoder().decodeBuffer(src));
-	}
 
 	public static String SHA1(String src) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA");
